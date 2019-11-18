@@ -255,6 +255,7 @@ public class CameraV1Impl extends BaseCamera {
             if (camera != null) {
                 camera.cancelAutoFocus();
                 camera.stopPreview();
+                camera.setPreviewCallback(null);
                 camera.release();
                 camera = null;
             }
