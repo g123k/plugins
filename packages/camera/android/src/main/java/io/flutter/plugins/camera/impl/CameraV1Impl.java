@@ -244,7 +244,7 @@ public class CameraV1Impl extends BaseCamera {
 
     public void close() {
         synchronized (cameraLock) {
-            if (!cameraReleased) {
+            if (cameraReleased) {
                 return;
             }
 
@@ -252,14 +252,18 @@ public class CameraV1Impl extends BaseCamera {
 
             stopBackgroundThread();
 
-            camera.cancelAutoFocus();
-            camera.stopPreview();
-            camera.release();
-            camera = null;
+            if (camera != null) {
+                camera.cancelAutoFocus();
+                camera.stopPreview();
+                camera.release();
+                camera = null;
+            }
 
-            mediaRecorder.reset();
-            mediaRecorder.release();
-            mediaRecorder = null;
+            if (mediaRecorder != null) {
+                mediaRecorder.reset();
+                mediaRecorder.release();
+                mediaRecorder = null;
+            }
         }
     }
 
